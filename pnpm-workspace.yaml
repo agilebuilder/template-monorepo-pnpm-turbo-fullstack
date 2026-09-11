@@ -2,6 +2,10 @@ packages:
   - "apps/*"
   - "packages/*"
 
-# pnpm 10+ 默认禁止依赖的安装脚本，这里仅放行 esbuild（Vite/tsup/tsx 依赖）
+# pnpm 10+ 默认禁止依赖的安装脚本。esbuild 是 Vite/tsup/tsx 的运行时依赖，必须放行其 postinstall。
+# allowBuilds 为 pnpm 11 写法，onlyBuiltDependencies 兼容 pnpm 9/10。
+allowBuilds:
+  esbuild: true
+
 onlyBuiltDependencies:
   - esbuild
