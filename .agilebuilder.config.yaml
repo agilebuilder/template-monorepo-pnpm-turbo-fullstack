@@ -46,7 +46,7 @@ variables:
 hooks:
   after_write:
     scriptType: shell
-    script: git init && git add -A && git commit -m "chore: init project from template"
+    script: 'git init && git add -A && git commit -m "chore: init project from template"'
     errorHandling: warn
 market:
   slug: pnpm-monorepo
