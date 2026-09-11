@@ -1,0 +1,44 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  box-sizing: border-box;
+  margin: 0 auto;
+  max-width: 720px;
+  padding: 48px 24px;
+}
+
+.ui-card {
+  border: 1px solid #8884;
+  border-radius: 8px;
+  margin-block: 16px;
+  padding: 16px 20px;
+}
+
+.ui-card__title {
+  font-size: 16px;
+  margin: 0 0 8px;
+}
+
+.ui-button {
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 8px 16px;
+}
+
+.ui-button--primary {
+  background: #3b82f6;
+  color: #fff;
+}
+
+.ui-button--secondary {
+  background: #8884;
+}

@@ -1,0 +1,72 @@
+version: "1.0"
+name: pnpm-monorepo
+description: pnpm workspace + Turborepo 全栈 Monorepo 模板（Vite + React + Express + TypeScript）
+variables:
+  enabled: true
+  delimiter: "%"
+  filePatterns:
+    mode: include
+    patterns:
+      - "package.json"
+      - "README.md"
+      - "AGENTS.md"
+      - "apps/web/index.html"
+      - "apps/web/package.json"
+      - "apps/web/tsconfig.json"
+      - "apps/web/src/App.tsx"
+      - "apps/api/package.json"
+      - "apps/api/tsconfig.json"
+      - "apps/api/src/index.ts"
+      - "packages/ui/package.json"
+      - "packages/ui/tsconfig.json"
+      - "packages/shared/package.json"
+      - "packages/shared/tsconfig.json"
+      - "packages/tsconfig/package.json"
+  inquirerQuestions:
+    - name: projectName
+      type: input
+      message: 项目名称（根 package.json 的 name）
+      default: demo-monorepo
+      required: true
+    - name: scope
+      type: input
+      message: 内部包 npm 作用域（如 @demo，内部包名形如 @demo/ui）
+      default: "@demo"
+      required: false
+    - name: description
+      type: input
+      message: 项目描述
+      default: 一个全栈 Monorepo
+      required: false
+    - name: author
+      type: input
+      message: 作者
+      default: ""
+      required: false
+hooks:
+  after_write:
+    scriptType: shell
+    script: git init && git add -A && git commit -m "chore: init project from template"
+    errorHandling: warn
+market:
+  slug: pnpm-monorepo
+  name: pnpm Monorepo 全栈模板
+  summary: 基于 pnpm workspace 与 Turborepo 的全栈 TypeScript Monorepo 脚手架
+  description: |
+    一套开箱即用的全栈 Monorepo 工程化模板，基于 **pnpm workspace + Turborepo**：
+
+    - `apps/web`：Vite + React + TypeScript 前端应用，内置 `/api` 代理
+    - `apps/api`：Node + Express + TypeScript 轻量 HTTP 服务（端口 3001）
+    - `packages/ui`：React 共享组件库（tsup 构建，ESM + CJS 双产物）
+    - `packages/shared`：共享工具函数与类型定义
+    - `packages/tsconfig`：共享 tsconfig 基座，统一编译约束
+
+    内置 Turborepo 构建缓存与 build / lint / test / dev 管道，根目录统一 ESLint（flat config）+ Prettier 配置，适合中大型团队协作的全栈项目起步。
+  category: 工程化
+  tags:
+    - Monorepo
+    - pnpm
+    - Turborepo
+    - TypeScript
+    - React
+  version: 1.0.0
