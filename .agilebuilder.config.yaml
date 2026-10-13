@@ -70,3 +70,18 @@ market:
     - TypeScript
     - React
   version: 1.0.0
+  gitUrl: https://github.com/agilebuilder/template-monorepo-pnpm-turbo-fullstack.git
+  defaultBranch: main
+  englishMetadata:
+    name: pnpm full-stack monorepo
+    summary: TypeScript full-stack workspace managed by pnpm and Turborepo.
+    description: A workspace with Vite/React web and Express API apps, shared UI and
+      utility packages, reusable TypeScript configuration, and Turborepo
+      build/lint/test tasks. Internal dependencies use workspace links.
+    category: Engineering
+    tags:
+      - Monorepo
+      - pnpm
+      - Turborepo
+      - TypeScript
+      - React
