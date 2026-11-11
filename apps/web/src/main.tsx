@@ -6,7 +6,7 @@ import "./index.css";
 
 const container = document.getElementById("root");
 if (!container) {
-  throw new Error("找不到 #root 挂载节点");
+  throw new Error("Root element #root not found");
 }
 
 createRoot(container).render(

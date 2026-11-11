@@ -1,6 +1,6 @@
 version: "1.0"
 name: pnpm-monorepo
-description: pnpm workspace + Turborepo 全栈 Monorepo 模板（Vite + React + Express + TypeScript）
+description: pnpm workspace + Turborepo full-stack Monorepo template (Vite + React + Express + TypeScript)
 variables:
   enabled: true
   delimiter: "%"
@@ -9,6 +9,7 @@ variables:
     patterns:
       - "package.json"
       - "README.md"
+      - "README.zh-CN.md"
       - "AGENTS.md"
       - "apps/web/index.html"
       - "apps/web/package.json"
@@ -25,22 +26,22 @@ variables:
   inquirerQuestions:
     - name: projectName
       type: input
-      message: 项目名称（根 package.json 的 name）
+      message: Project name (root package.json name)
       default: demo-monorepo
       required: true
     - name: scope
       type: input
-      message: 内部包 npm 作用域（如 @demo，内部包名形如 @demo/ui）
+      message: npm scope for internal packages (e.g. @demo; package names look like @demo/ui)
       default: "@demo"
       required: false
     - name: description
       type: input
-      message: 项目描述
-      default: 一个全栈 Monorepo
+      message: Project description
+      default: A full-stack monorepo
       required: false
     - name: author
       type: input
-      message: 作者
+      message: Author
       default: ""
       required: false
 hooks:

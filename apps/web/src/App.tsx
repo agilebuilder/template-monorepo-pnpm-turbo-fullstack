@@ -8,24 +8,24 @@ interface HelloData {
 }
 
 export default function App() {
-  const [greeting, setGreeting] = useState("加载中…");
+  const [greeting, setGreeting] = useState("Loading…");
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     fetch("/api/hello?name=<%= projectName %>")
       .then((res) => res.json())
       .then((json: ApiResult<HelloData>) => setGreeting(json.data.greeting))
-      .catch(() => setGreeting("无法连接 API，请先运行 pnpm dev --filter=api"));
+      .catch(() => setGreeting("Cannot reach the API; run pnpm dev --filter=api first"));
   }, []);
 
   return (
     <main className="app">
       <h1><%= projectName %></h1>
-      <Card title="来自 apps/api 的消息">
+      <Card title="Message from apps/api">
         <p>{greeting}</p>
       </Card>
-      <Card title="来自 <%= scope %>/ui 的组件">
-        <Button onClick={() => setCount((value) => value + 1)}>点击次数：{count}</Button>
+      <Card title="Component from <%= scope %>/ui">
+        <Button onClick={() => setCount((value) => value + 1)}>Clicks: {count}</Button>
       </Card>
     </main>
   );

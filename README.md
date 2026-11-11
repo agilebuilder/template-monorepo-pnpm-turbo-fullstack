@@ -2,83 +2,82 @@
 
 > <%= description %>
 
-基于 **pnpm workspace + Turborepo** 的全栈 TypeScript Monorepo 模板。
+A full-stack TypeScript Monorepo template based on **pnpm workspace + Turborepo**.
 
-## 技术栈
+## Tech Stack
 
-- 包管理与编排：pnpm workspace、Turborepo（构建缓存与任务管道）
-- 前端：Vite + React 18 + TypeScript
-- 后端：Node.js + Express + TypeScript（tsx 开发热更新）
-- 共享包：tsup 构建（ESM + CJS + d.ts 三产物）
-- 代码规范：ESLint 9（flat config）+ Prettier
+- Package management and orchestration: pnpm workspace, Turborepo (build cache and task pipelines)
+- Frontend: Vite + React 18 + TypeScript
+- Backend: Node.js + Express + TypeScript (tsx hot reload in dev)
+- Shared packages: built with tsup (ESM + CJS + d.ts outputs)
+- Code style: ESLint 9 (flat config) + Prettier
 
-## 目录结构
+## Project Structure
 
 ```
 <%= projectName %>/
 ├── apps/
-│   ├── web/                # Vite + React 前端应用（开发端口 5173，/api 代理到 3001）
-│   └── api/                # Express 轻量 HTTP 服务（端口固定 3001）
+│   ├── web/                # Vite + React frontend (dev port 5173, /api proxied to 3001)
+│   └── api/                # Lightweight Express HTTP service (fixed port 3001)
 ├── packages/
-│   ├── ui/                 # React 共享组件库（tsup 构建）
-│   ├── shared/             # 共享工具函数与类型定义
-│   └── tsconfig/           # 共享 tsconfig 基座（base.json / react.json）
-├── package.json            # 根包（private，统一脚本入口）
-├── pnpm-workspace.yaml     # workspace 声明
-├── turbo.json              # Turborepo 任务管道：build / lint / test / dev
-├── eslint.config.js        # 根 ESLint flat config，子包共用
-└── .npmrc                  # pnpm 行为配置
+│   ├── ui/                 # Shared React component library (tsup build)
+│   ├── shared/             # Shared utilities and type definitions
+│   └── tsconfig/           # Shared tsconfig bases (base.json / react.json)
+├── package.json            # Root package (private; unified script entry points)
+├── pnpm-workspace.yaml     # Workspace declaration
+├── turbo.json              # Turborepo task pipelines: build / lint / test / dev
+├── eslint.config.js        # Root ESLint flat config shared by subpackages
+└── .npmrc                  # pnpm behavior config
 ```
 
-内部包均以 `<%= scope %>` 为作用域命名，例如 `<%= scope %>/ui`、`<%= scope %>/shared`、`<%= scope %>/tsconfig`，
-workspace 内通过 `"<%= scope %>/ui": "workspace:*"` 方式互相引用。
+Internal packages are scoped under `<%= scope %>`, e.g. `<%= scope %>/ui`, `<%= scope %>/shared`, `<%= scope %>/tsconfig`. They reference each other inside the workspace via `"<%= scope %>/ui": "workspace:*"`.
 
-## 快速开始
+## Quick Start
 
-使用 AgileBuilder CLI 从模板生成项目：
+Generate a project from this template with the AgileBuilder CLI:
 
 ```bash
-ag create --git-url <仓库地址> --target <目录>
+ag create --git-url <repo-url> --target <directory>
 ```
 
-生成后进入项目目录：
+Then enter the project directory:
 
 ```bash
-cd <目录>
+cd <directory>
 pnpm install
-pnpm dev        # 并行启动 web (5173) 与 api (3001)
+pnpm dev        # start web (5173) and api (3001) in parallel
 ```
 
-浏览器访问 http://localhost:5173 ，页面会通过 Vite 代理调用 `http://localhost:3001/api/hello`。
+Open http://localhost:5173 in a browser; the page calls `http://localhost:3001/api/hello` through the Vite proxy.
 
-## 模板变量
+## Template Variables
 
-| 变量名 | 说明 | 默认值 |
+| Variable | Description | Default |
 | --- | --- | --- |
-| `projectName` | 项目名称（根 package.json 的 name） | `demo-monorepo` |
-| `scope` | 内部包 npm 作用域，内部包名形如 `<%= scope %>/ui` | `@demo` |
-| `description` | 项目描述 | `一个全栈 Monorepo` |
-| `author` | 作者 | （空） |
+| `projectName` | Project name (root package.json `name`) | `demo-monorepo` |
+| `scope` | npm scope for internal packages; package names look like `<%= scope %>/ui` | `@demo` |
+| `description` | Project description | A full-stack monorepo |
+| `author` | Author | (empty) |
 
-## 常用命令
+## Common Commands
 
-| 命令 | 说明 |
+| Command | Description |
 | --- | --- |
-| `pnpm dev` | Turborepo 并行启动所有包的 dev 任务 |
-| `pnpm build` | Turborepo 按依赖拓扑构建全部包（含缓存） |
-| `pnpm lint` | 所有包执行 ESLint |
-| `pnpm test` | 执行单元测试（packages/shared 使用 Vitest） |
-| `pnpm format` | Prettier 格式化全仓库 |
-| `pnpm clean` | 清理构建产物与 node_modules |
+| `pnpm dev` | Start all dev tasks in parallel via Turborepo |
+| `pnpm build` | Build all packages in dependency order (with cache) |
+| `pnpm lint` | Run ESLint in every package |
+| `pnpm test` | Run unit tests (packages/shared uses Vitest) |
+| `pnpm format` | Prettier formatting across the repo |
+| `pnpm clean` | Remove build outputs and node_modules |
 
-单包命令可用 Turborepo 过滤，例如：`pnpm build --filter=web`、`pnpm dev --filter=api`。
+Use Turborepo filtering for single-package commands, e.g. `pnpm build --filter=web`, `pnpm dev --filter=api`.
 
-## API 说明
+## API
 
-`apps/api` 内置两个端点（端口固定 3001）：
+`apps/api` ships two endpoints (fixed port 3001):
 
-- `GET /health`：健康检查，返回 `{ status, uptime }`
-- `GET /api/hello?name=xxx`：返回由 `<%= scope %>/shared` 生成的问候语
+- `GET /health`: health check returning `{ status, uptime }`
+- `GET /api/hello?name=xxx`: returns a greeting built by `<%= scope %>/shared`
 
 ## License
 

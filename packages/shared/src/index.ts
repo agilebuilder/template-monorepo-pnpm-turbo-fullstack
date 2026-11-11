@@ -1,22 +1,22 @@
-/** 统一 API 响应包装类型 */
+/** Unified API response wrapper type */
 export interface ApiResult<T> {
   ok: boolean;
   data: T;
   message?: string;
 }
 
-/** 构造成功的 API 响应 */
+/** Build a successful API response */
 export function createResult<T>(data: T, message?: string): ApiResult<T> {
   return message === undefined ? { ok: true, data } : { ok: true, data, message };
 }
 
-/** 生成问候语 */
+/** Build a greeting message */
 export function formatGreeting(name: string): string {
   const trimmed = name.trim();
   return `Hello, ${trimmed.length > 0 ? trimmed : "world"}!`;
 }
 
-/** 将字符串转为 kebab-case（可用于生成路由、包名片段等） */
+/** Convert a string to kebab-case (useful for route paths, package name segments, etc.) */
 export function kebabCase(input: string): string {
   return input
     .trim()
@@ -25,7 +25,7 @@ export function kebabCase(input: string): string {
     .toLowerCase();
 }
 
-/** 异步等待 */
+/** Wait asynchronously */
 export function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }

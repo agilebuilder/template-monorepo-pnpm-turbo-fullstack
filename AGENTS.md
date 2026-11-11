@@ -1,43 +1,44 @@
 # AGENTS.md — <%= projectName %>
 
-给 AI 编码代理的项目导航指南。<%= description %>
+Navigation guide for AI coding agents. <%= description %>
 
-## 项目概览
+## Project Overview
 
-pnpm workspace + Turborepo 管理的全栈 TypeScript Monorepo。所有内部包以 `<%= scope %>` 为 npm 作用域。
+A full-stack TypeScript Monorepo managed by pnpm workspace + Turborepo. All internal packages are scoped under `<%= scope %>`.
 
-## 目录结构
+## Project Structure
 
-- `apps/web/` — Vite + React 18 前端。入口 `src/main.tsx`，根组件 `src/App.tsx`。开发端口 5173，`/api` 与 `/health` 由 Vite 代理转发到 3001。
-- `apps/api/` — Express HTTP 服务。入口 `src/index.ts`，端口固定 3001。dev 用 `tsx watch`，构建用 `tsc`（NodeNext ESM 输出到 `dist/`）。
-- `packages/ui/` — React 共享组件库，tsup 构建 ESM+CJS+d.ts。新组件放 `src/` 并从 `src/index.ts` 导出。
-- `packages/shared/` — 纯工具函数与类型（不依赖 React），tsup 构建，Vitest 测试放 `test/`。
-- `packages/tsconfig/` — 共享 tsconfig：`base.json`（Node/通用）、`react.json`（DOM + react-jsx）。子包通过 `"extends": "<%= scope %>/tsconfig/base.json"` 引用。
+- `apps/web/` — Vite + React 18 frontend. Entry `src/main.tsx`, root component `src/App.tsx`. Dev port 5173; `/api` and `/health` are proxied to 3001.
+- `apps/api/` — Express HTTP service. Entry `src/index.ts`, fixed port 3001. `tsx watch` in dev; built with `tsc` (NodeNext ESM output to `dist/`).
+- `packages/ui/` — Shared React component library, built with tsup (ESM + CJS + d.ts). Put new components in `src/` and export them from `src/index.ts`.
+- `packages/shared/` — Pure utilities and types (no React dependency), built with tsup; Vitest tests live in `test/`.
+- `packages/tsconfig/` — Shared tsconfigs: `base.json` (Node/generic), `react.json` (DOM + react-jsx). Subpackages reference them via `"extends": "<%= scope %>/tsconfig/base.json"`.
 
-## 约定
+## Conventions
 
-- 包管理只用 **pnpm**，不要提交 npm/yarn 的 lock 文件以外的内容；`pnpm-lock.yaml` 应提交。
-- 内部依赖一律用 `"workspace:*"` 版本声明。
-- 新包命名：应用放 `apps/`（短名如 `web`、`api`），库放 `packages/` 并以 `<%= scope %>/` 为作用域。
-- 代码风格：ESLint flat config（根 `eslint.config.js`，子包共享）+ Prettier（2 空格、LF）。未使用变量加 `_` 前缀豁免。
-- TypeScript 严格模式（`strict` + `noUncheckedIndexedAccess`）；库包必须产出 d.ts。
-- React 组件用函数组件 + TypeScript interface 描述 props。
-- 不要改动 `turbo.json` 管道拓扑，除非同步更新根 `package.json` 脚本。
+- Use **pnpm** exclusively; do not commit lock files other than pnpm's — `pnpm-lock.yaml` should be committed.
+- Internal dependencies always use `"workspace:*"` version ranges.
+- New package naming: apps go in `apps/` (short names like `web`, `api`); libraries go in `packages/` under the `<%= scope %>/` scope.
+- Code style: ESLint flat config (root `eslint.config.js`, shared by subpackages) + Prettier (2 spaces, LF). Unused variables are exempted with a `_` prefix.
+- TypeScript strict mode (`strict` + `noUncheckedIndexedAccess`); library packages must emit d.ts files.
+- React components are function components with props typed as TypeScript interfaces.
+- UI copy is written in English.
+- Do not change the `turbo.json` pipeline topology without updating the root `package.json` scripts accordingly.
 
-## 常用命令
+## Common Commands
 
 ```bash
-pnpm install                      # 安装全部依赖
-pnpm dev                          # 并行启动所有 dev 任务
-pnpm build                        # 拓扑构建全部包（turbo 缓存）
-pnpm lint / pnpm test             # 全仓库 lint / 测试
-pnpm build --filter=web           # 只构建 web 及其内部依赖
-pnpm --filter <%= scope %>/shared test   # 只跑 shared 的测试
-pnpm format                       # Prettier 全量格式化
+pnpm install                      # install all dependencies
+pnpm dev                          # start all dev tasks in parallel
+pnpm build                        # build all packages in topo order (turbo cache)
+pnpm lint / pnpm test             # repo-wide lint / test
+pnpm build --filter=web           # build only web and its internal dependencies
+pnpm --filter <%= scope %>/shared test   # run only the shared tests
+pnpm format                       # Prettier formatting across the repo
 ```
 
-## 修改指引
+## Guidance for Changes
 
-- 改共享代码先确认影响面：`packages/shared` 被 web 和 api 同时依赖；`packages/ui` 被 web 依赖。
-- 构建顺序由 Turborepo 依 `dependsOn: ["^build"]` 自动保证，手写脚本不要绕过。
-- 新增环境变量时同步更新 `.gitignore` 检查，不要把 `.env` 提交进仓库。
+- Check the blast radius before touching shared code: `packages/shared` is depended on by both web and api; `packages/ui` is depended on by web.
+- Build order is guaranteed by Turborepo via `dependsOn: ["^build"]`; do not bypass it with hand-written scripts.
+- When adding new environment variables, review `.gitignore` so `.env` files are never committed.

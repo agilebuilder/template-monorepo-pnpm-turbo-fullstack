@@ -1,7 +1,7 @@
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  /** 视觉风格变体 */
+  /** Visual style variant */
   variant?: "primary" | "secondary";
   children?: ReactNode;
 }
