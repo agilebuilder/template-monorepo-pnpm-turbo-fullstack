@@ -51,19 +51,19 @@ hooks:
     errorHandling: warn
 market:
   slug: pnpm-monorepo
-  name: pnpm Monorepo 全栈模板
-  summary: 基于 pnpm workspace 与 Turborepo 的全栈 TypeScript Monorepo 脚手架
+  name: pnpm full-stack monorepo
+  summary: TypeScript full-stack workspace managed by pnpm and Turborepo.
   description: |
-    一套开箱即用的全栈 Monorepo 工程化模板，基于 **pnpm workspace + Turborepo**：
+    A ready-to-use full-stack Monorepo engineering template based on **pnpm workspace + Turborepo**:
 
-    - `apps/web`：Vite + React + TypeScript 前端应用，内置 `/api` 代理
-    - `apps/api`：Node + Express + TypeScript 轻量 HTTP 服务（端口 3001）
-    - `packages/ui`：React 共享组件库（tsup 构建，ESM + CJS 双产物）
-    - `packages/shared`：共享工具函数与类型定义
-    - `packages/tsconfig`：共享 tsconfig 基座，统一编译约束
+    - `apps/web`: Vite + React + TypeScript frontend with a built-in `/api` proxy
+    - `apps/api`: lightweight Node + Express + TypeScript HTTP service (port 3001)
+    - `packages/ui`: shared React component library (tsup build, ESM + CJS outputs)
+    - `packages/shared`: shared utilities and type definitions
+    - `packages/tsconfig`: shared tsconfig bases for consistent compilation constraints
 
-    内置 Turborepo 构建缓存与 build / lint / test / dev 管道，根目录统一 ESLint（flat config）+ Prettier 配置，适合中大型团队协作的全栈项目起步。
-  category: 工程化
+    Ships with Turborepo build caching and build / lint / test / dev pipelines, root-level ESLint (flat config) + Prettier, ready for full-stack teams.
+  category: Engineering
   tags:
     - Monorepo
     - pnpm
@@ -73,13 +73,20 @@ market:
   version: 1.0.0
   gitUrl: https://github.com/agilebuilder/template-monorepo-pnpm-turbo-fullstack.git
   defaultBranch: main
-  englishMetadata:
-    name: pnpm full-stack monorepo
-    summary: TypeScript full-stack workspace managed by pnpm and Turborepo.
-    description: A workspace with Vite/React web and Express API apps, shared UI and
-      utility packages, reusable TypeScript configuration, and Turborepo
-      build/lint/test tasks. Internal dependencies use workspace links.
-    category: Engineering
+  metadata-zh:
+    name: pnpm Monorepo 全栈模板
+    summary: 基于 pnpm workspace 与 Turborepo 的全栈 TypeScript Monorepo 脚手架
+    description: |
+      一套开箱即用的全栈 Monorepo 工程化模板，基于 **pnpm workspace + Turborepo**：
+
+      - `apps/web`：Vite + React + TypeScript 前端应用，内置 `/api` 代理
+      - `apps/api`：Node + Express + TypeScript 轻量 HTTP 服务（端口 3001）
+      - `packages/ui`：React 共享组件库（tsup 构建，ESM + CJS 双产物）
+      - `packages/shared`：共享工具函数与类型定义
+      - `packages/tsconfig`：共享 tsconfig 基座，统一编译约束
+
+      内置 Turborepo 构建缓存与 build / lint / test / dev 管道，根目录统一 ESLint（flat config）+ Prettier 配置，适合中大型团队协作的全栈项目起步。
+    category: 工程化
     tags:
       - Monorepo
       - pnpm
